@@ -17,3 +17,32 @@ export async function createGenre(req:Request,res:Response){
         message:"Genre Created"
     });
 }
+
+export async function getGenre(req:Request,res:Response):Promise<Response>
+{
+    const id=req.params.genreId;
+    const conn=await connect();
+    const genres=await conn.query('SELECT * FROM genres WHERE gen_id = ?',[id]);
+    return res.json(genres[0]);
+}
+
+export async function deleteGenre(req:Request,res:Response):Promise<Response>
+{
+    const id=req.params.genreId;
+    const conn=await connect();
+    await conn.query('DELETE FROM genres WHERE gen_id=?',[id]);
+
+    return res.json({
+        message:'Post deleted' 
+    });
+}
+export async function updateGenre(req:Request,res:Response){
+    const id=req.params.genreId;
+    const updateGenre:Genre=req.body;
+    console.log(updateGenre);
+    const conn=await connect();
+    conn.query('UPDATE genres set ? WHERE gen_id= ?',[updateGenre,id]);
+    return res.json({
+        message:'Post updated' 
+    });
+}

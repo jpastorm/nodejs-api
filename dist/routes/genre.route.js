@@ -7,7 +7,7 @@ router.route('/').
     get(genre_controller_1.getGenres).
     post(genre_controller_1.createGenre);
 router.route('/:genreId').
-    get().
-    delete().
-    put();
+    get(genre_controller_1.getGenre).
+    delete(genre_controller_1.deleteGenre).
+    put(genre_controller_1.updateGenre);
 exports.default = router;
